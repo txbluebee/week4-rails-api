@@ -1,10 +1,12 @@
 class QuotesController < ApplicationController
+
   def index
     @quotes = Quote.all
     author = params[:author]
     @quotes = Quote.search(author)
     json_response(@quotes)
   end
+
   def show
     @quote = Quote.find(params[:id])
     json_response(@quote)
@@ -26,8 +28,11 @@ class QuotesController < ApplicationController
 
   def destroy
     @quote = Quote.find(params[:id])
-    @quote.destroy
-    json_response(@quote, :ok)
+    if @quote.destroy
+      head(:ok)
+    else
+      head(:unprocessable_entity)
+    end
   end
 
 private
