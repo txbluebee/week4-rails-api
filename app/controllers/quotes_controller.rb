@@ -4,7 +4,7 @@ class QuotesController < ApplicationController
     @quotes = Quote.all
     author = params[:author]
     @quotes = Quote.search(author)
-    json_response(@quotes)
+    render :index, status: :ok
   end
 
   def show
@@ -14,7 +14,7 @@ class QuotesController < ApplicationController
 
   def create
     @quote = Quote.create!(quote_params)
-    json_response(@quote, :created)
+    render :create, status: :created
   end
 
   def update
